@@ -1,0 +1,57 @@
+(defcfg
+  input  (low-level-hook)
+  output (send-event-sink)
+  fallthrough true
+)
+
+(defsrc
+  esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft up   del
+  lctl lmet lalt spc  ralt fn   left down right
+)
+
+(defalias
+  ;; Home row mods
+  a (tap-hold-next-release 400 a lctl)
+  s (tap-hold-next-release 200 s lalt)
+  d (tap-hold-next-release 600 d lmet)
+  f (tap-hold-next-release 200 f lsft)
+  
+  j (tap-hold-next-release 200 j rshft)
+  k (tap-hold-next-release 600 k rmet)
+  l (tap-hold-next-release 200 l ralt)
+  scln (tap-hold-next-release 400 ; rctl)
+  
+  ;; Tilde layer triggers
+  a-tld (tap-hold-next-release 200 a (layer-toggle tilde-layer))
+  ;-tld (tap-hold-next-release 200 ; (layer-toggle tilde-layer))
+  
+  ;; Caps Lock layer with original arrow keys
+  cps (tap-hold-next-release 200 caps (layer-toggle caps-arrows))
+)
+
+(deflayer base
+  esc   1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab   q    w    e    r    t    y    u    i    o    p    [    ]    \
+  @cps  @a   @s   @d   @f   g    h    @j   @k   @l   @scln '    ret
+  lsft  z    x    c    v    b    n    m    ,    .    /    rsft up   del
+  lctl  lmet lalt spc  ralt fn   left down right
+)
+
+(deflayer tilde-layer
+  ~    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _
+)
+
+(deflayer caps-arrows
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    left up   down right _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _
+)
