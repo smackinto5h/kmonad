@@ -1,6 +1,6 @@
 # kmonad
 
-ever just wish you had a something established for your already that just worked?
+ever just wish you had something established for you already that just worked?
 well here i will share my layouts for my personal homerow mods and other keyboard
 reconfigurations for kmonad. i really enjoy using kmonad for my homerow mods since
 a lot of other solutions that work on linux or macos just dont work on windows but
