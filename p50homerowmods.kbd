@@ -1,0 +1,66 @@
+# this is my KMonad script for the P50 ThinkPad running Arch Linux.
+# to ensure this script works for you follow the instructions in the comments, then delete out the whole comments including the #
+# i hope this helps someone. this shit took me HOURS to trouble shoot but i finally got it. 
+
+(defcfg
+  input  (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd") # This is the Path and name of MY p50 keyboard yours may be different so check
+  output (uinput-sink "ThinkPad P50 Keyboard")                               # To find yours, cd /dev/input/by-path/ and then run an -ls your keyboard should be labeled with "kbd" in the name
+  fallthrough true
+  allow-cmd false
+)
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn   lctl lmet lalt spc  ralt prnt rctl pgup up   pgdn
+)
+
+(defalias
+  ;; Custom layer for home row mods and caps+hjkl navigation
+  hmods (layer-toggle home-mods)
+  
+  ;; Home row mod aliases
+  ctla (tap-hold-next-release 200 a lctl)
+  alts (tap-hold-next-release 200 s lalt)
+  wind (tap-hold-next-release 200 d lmet)
+  shftf (tap-hold-next-release 200 f lsft)
+  
+  ;; Right side home row mods
+  shftj (tap-hold-next-release 200 j rsft)
+  wink (tap-hold-next-release 200 k lmet)
+  altl (tap-hold-next-release 200 l lalt)
+  ctlscln (tap-hold-next-release 200 ; rctl)
+  
+  ;; Caps + hjkl navigation layer
+  nav (layer-toggle navigation)
+)
+
+(deflayer base
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  @nav @ctla @alts @wind @shftf g h   @shftj @wink @altl @ctlscln '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn   lctl lmet lalt spc  ralt prnt rctl pgup up   pgdn
+)
+
+(deflayer navigation
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    left up  down rght _    _
+  _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _
+)
+
+(deflayer home-mods
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  XX   a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  fn   lctl lmet lalt spc  ralt prnt rctl pgup up   pgdn
+)
